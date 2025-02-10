@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário de Segurança Biométrica</title>
+    <style>
+        /* Estilos Gerais */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1f2d3d; /* Azul Marinho */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 800px;
+            border-radius: 16px;
+            box-shadow: 0 10px 60px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-sizing: border-box;
+            margin-top: 50px;
+            animation: fadeIn 0.7s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Cabeçalho */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: headerAnimation 0.8s ease-in-out;
+        }
+
+        @keyframes headerAnimation {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header h1 {
+            color: #1e3a8a; /* Azul para o logo */
+            font-size: 36px;
+            margin: 0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #a5a5a5;
+            font-size: 18px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Perguntas e Opções */
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .question p {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .option input {
+            margin-right: 15px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .option:hover {
+            color: #007bff;
+            transform: translateX(5px);
+        }
+
+        .option input:checked {
+            transform: scale(1.2);
+        }
+
+        /* Campos de Input */
+        .input-field {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .input-field label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-field input {
+            width: 80%; /* Ajustando para uma largura mais adequada */
+            padding: 14px 20px;
+            font-size: 16px;
+            border: 1px solid #dcdcdc;
+            border-radius: 10px;
+            margin-top: 8px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .input-field input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+            outline: none;
+        }
+
+        .input-field input::placeholder {
+            color: #aaa;
+        }
+
+        /* Botão de Envio */
+        .btn {
+            background: linear-gradient(145deg, #4e73df, #224abe);
+            color: white;
+            padding: 16px 35px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #224abe, #4e73df);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mensagens de Sucesso/Erro */
+        .thanks-message,
+        .error-message {
+            text-align: center;
+            font-size: 16px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .thanks-message {
+            color: #28a745;
+        }
+
+        .error-message {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>TechMag</h1>
+            <p>Pesquisa de Satisfação</p>
+        </div>
+
+        <form id="questionnaire" action="https://formspree.io/f/mkgozdgz" method="POST">
+            <!-- Campo para Nome da Empresa -->
+            <div class="input-field">
+                <label for="company-name">Nome da Empresa</label>
+                <input type="text" id="company-name" name="company-name" placeholder="Digite o nome da sua empresa" required>
+            </div>
+
+            <!-- Pergunta 1 -->
+            <div class="question">
+                <p>1. A sua empresa já utilizou alguma solução biométrica (biometria facial, leitor biométrico)?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q1-yes" name="q1" value="sim">
+                        <label for="q1-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1-no" name="q1" value="não">
+                        <label for="q1-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 2 -->
+            <div class="question">
+                <p>2. Sua empresa já sofreu com fraudes ou acessos não autorizados em sistemas críticos?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q2-yes" name="q2" value="sim">
+                        <label for="q2-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2-no" name="q2" value="não">
+                        <label for="q2-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 3 -->
+            <div class="question">
+                <p>3. Você já considerou usar biometria facial ou leitores biométricos para melhorar a segurança na sua empresa?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q3-yes" name="q3" value="sim">
+                        <label for="q3-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3-no" name="q3" value="não">
+                        <label for="q3-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pergunta 4 -->
+            <div class="question">
+                <p>4. Gostaria de saber mais sobre soluções biométricas no futuro?</p>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="q4-yes" name="q4" value="sim">
+                        <label for="q4-yes">Sim</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4-no" name="q4" value="não">
+                        <label for="q4-no">Não</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de envio -->
+            <button type="submit" class="btn">Enviar Respostas</button>
+        </form>
+
+        <!-- Mensagens de Sucesso/Erro -->
+        <div class="thanks-message">
+            <p>Obrigado por responder o questionário! Suas respostas foram enviadas com sucesso.</p>
+        </div>
+
+        <div class="error-message">
+            <p>Por favor, responda todas as perguntas antes de enviar.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("questionnaire");
+        const thanksMessage = document.querySelector(".thanks-message");
+        const errorMessage = document.querySelector(".error-message");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Verifica se todas as perguntas foram respondidas
+            const answers = {
+                q1: form.querySelector('input[name="q1"]:checked'),
+                q2: form.querySelector('input[name="q2"]:checked'),
+                q3: form.querySelector('input[name="q3"]:checked'),
+                q4: form.querySelector('input[name="q4"]:checked')
+            };
+
+            if (answers.q1 && answers.q2 && answers.q3 && answers.q4) {
+                thanksMessage.style.display = "block";
+                errorMessage.style.display = "none";
+                form.submit(); // Envia o formulário após validação
+            } else {
+                errorMessage.style.display = "block";
+                thanksMessage.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
